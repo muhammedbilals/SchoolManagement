@@ -16,5 +16,12 @@ namespace api.mappers
                  Name =user.Name
             };
         }
+
+        public static User ToLoginDto (this LoginUserDto userDto ){
+            return new User{
+                Email =userDto.Email,
+                Password =userDto.Password
+            };
+        }
     }
 }

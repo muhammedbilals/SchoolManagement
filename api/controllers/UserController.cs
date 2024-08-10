@@ -8,11 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
 {
-
     [Route("api/users")]
     [ApiController]
-
-
 
     public class UserController: ControllerBase
     {
@@ -23,10 +20,13 @@ namespace api.controllers
         _context =context;
        }
        [HttpGet]
-        public IActionResult Login(){
+        public IActionResult GetUsers(){
             var User = _context.Users.ToList().Select(s => s.ToUserDto());
-
             return Ok(User);
         }
+        // [HttpPost]
+        // public IActionResult Login([FromBody]  ){
+            
+        // }
     }
 }
