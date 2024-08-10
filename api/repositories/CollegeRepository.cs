@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.data;
+using api.dtos.college;
 using api.interfaces;
 using api.models;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,24 @@ namespace api.repositories
             _context = context;
         }
 
-        public Task<College> CreateCollege()
+        public async Task<College> CreateCollege(College collage)
         {
-            throw new NotImplementedException();
+             await _context.College.AddAsync(collage);
+             await _context.SaveChangesAsync();
+             return collage;
         }
 
-        public Task<College> DeleteCollege()
+        public async Task<College?> DeleteCollege(int id)
         {
-            throw new NotImplementedException();
+          var college =await _context.College.FirstOrDefaultAsync(a => a.Id ==id);
+
+          if(college==null){
+            return null;
+          }
+          _context.Remove(college);
+          await _context.SaveChangesAsync();
+
+          return college;
         }
 
         public async Task<College?> GetCollege(int id)
