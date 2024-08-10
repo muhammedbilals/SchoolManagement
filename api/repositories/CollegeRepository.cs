@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using api.data;
 using api.interfaces;
 using api.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.repositories
 {
@@ -27,9 +28,9 @@ namespace api.repositories
             throw new NotImplementedException();
         }
 
-        public async  Task<College> GetCollege()
+        public async Task<College?> GetCollege(int id)
         {
-            throw new NotImplementedException();
+            return await _context.College.FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public Task<College> UpdateCollege()

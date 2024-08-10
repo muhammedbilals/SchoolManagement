@@ -13,15 +13,19 @@ namespace api.controllers
     public class CollegeController : ControllerBase
     {
 
-        private readonly CollegeRepository _collageRepo;
-        public CollegeController(CollegeRepository collegeRepo)
+        private readonly ICollegeRepository _collageRepo;
+        public CollegeController(ICollegeRepository collegeRepo)
         {
             _collageRepo = collegeRepo;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> getCollege(){
-            var collage = _collageRepo.GetCollege();
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getCollege([FromRoute] int id){
+            var collage = await _collageRepo.GetCollege(id);
+
+            if(collage ==null ){
+                return NotFound();
+            }
 
             return Ok(collage);
         }

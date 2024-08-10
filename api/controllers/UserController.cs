@@ -17,7 +17,7 @@ namespace api.controllers
     public class UserController: ControllerBase {
     private readonly IUserRepository _userRepo;
 
-       public UserController(ApplicationDbContext context,IUserRepository userRepo)
+       public UserController(IUserRepository userRepo)
        {
             _userRepo =userRepo;
        }

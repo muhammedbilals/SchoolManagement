@@ -9,7 +9,7 @@ namespace api.interfaces
     public interface ICollegeRepository
     {
         public Task<College> CreateCollege();
-        public Task<College> GetCollege();
+        public Task<College?> GetCollege(int id);
         public Task<College> UpdateCollege();
         public Task<College> DeleteCollege();
 
