@@ -6,6 +6,7 @@ using api.data;
 using api.dtos.user;
 using api.mappers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.controllers
 {
@@ -21,17 +22,18 @@ namespace api.controllers
         _context =context;
        }
        [HttpGet("getusers")]
-        public IActionResult GetUsers(){
-            var User = _context.Users.ToList().Select(s => s.ToUserDto());
+        public async Task<IActionResult> GetUsers(){
+            var User = await _context.Users.ToListAsync();
+            var UserDto = User.Select(s => s.ToUserDto());
 
-            return Ok(User);
+            return Ok(UserDto);
         }
 
         
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginUserDto userDto ){
+        public async Task<IActionResult> Login([FromBody] LoginUserDto userDto ){
             var userModel = userDto.ToLoginDto();
-            var user =_context.Users.FirstOrDefault(u => u.Email == userModel.Email);
+            var user =await _context.Users.FirstOrDefaultAsync(u => u.Email == userModel.Email);
         if (user ==null){
             return NotFound(new {message = "User not found"});
         }
