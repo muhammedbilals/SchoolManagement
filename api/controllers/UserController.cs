@@ -14,16 +14,16 @@ namespace api.controllers
     [Route("api/users")]
     [ApiController]
 
-    public class UserController: ControllerBase
-    {
+    public class UserController: ControllerBase {
     private readonly IUserRepository _userRepo;
 
        public UserController(ApplicationDbContext context,IUserRepository userRepo)
        {
-        _userRepo =userRepo;
+            _userRepo =userRepo;
        }
        [HttpGet("getusers")]
         public async Task<IActionResult> GetUsers(){
+
             var User = await _userRepo.GetUsers();
             var UserDto = User.Select(s => s.ToUserDto());
 
@@ -33,17 +33,20 @@ namespace api.controllers
         
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto userDto ){
+
             var userModel = userDto.ToLoginDto();
             var user =await _userRepo.GetUserByEmail(userModel.Email);
-        if (user ==null){
-            return NotFound(new {message = "User not found"});
-        }
 
-        if (user.Password != userModel.Password){
-            return Unauthorized(new {message ="Wrong Password"});
-        }
+            if (user ==null){
+                return NotFound(new {message = "User not found"});
+            }
 
-        return Ok(new {message ="Login Successfull", user = user.ToUserDto()});
+            if (user.Password != userModel.Password){
+                return Unauthorized(new {message ="Wrong Password"});
+            }
+
+            return Ok(new {message ="Login Successfull", user = user.ToUserDto()});
+
         }   
     }
 }
