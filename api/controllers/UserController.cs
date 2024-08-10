@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.data;
 using api.dtos.user;
+using api.interfaces;
 using api.mappers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +16,15 @@ namespace api.controllers
 
     public class UserController: ControllerBase
     {
-    private readonly ApplicationDbContext _context;
+    private readonly IUserRepository _userRepo;
 
-       public UserController(ApplicationDbContext context)
+       public UserController(ApplicationDbContext context,IUserRepository userRepo)
        {
-        _context =context;
+        _userRepo =userRepo;
        }
        [HttpGet("getusers")]
         public async Task<IActionResult> GetUsers(){
-            var User = await _context.Users.ToListAsync();
+            var User = await _userRepo.GetUsers();
             var UserDto = User.Select(s => s.ToUserDto());
 
             return Ok(UserDto);
@@ -33,7 +34,7 @@ namespace api.controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDto userDto ){
             var userModel = userDto.ToLoginDto();
-            var user =await _context.Users.FirstOrDefaultAsync(u => u.Email == userModel.Email);
+            var user =await _userRepo.GetUserByEmail(userModel.Email);
         if (user ==null){
             return NotFound(new {message = "User not found"});
         }
