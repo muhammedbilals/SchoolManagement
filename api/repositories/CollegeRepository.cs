@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using api.data;
 using api.dtos.college;
 using api.interfaces;
@@ -46,7 +43,7 @@ namespace api.repositories
 
         public async Task<College?> UpdateCollege(int id ,CollegeDto collegeDto)
         {
-           var college = await _context.College.FirstOrDefaultAsync(x => x.Id ==id );
+           var college = await _context.College.FirstOrDefaultAsync(x => x.Id ==id);
 
            if(college==null){
             return null;
@@ -55,9 +52,9 @@ namespace api.repositories
            college.Name =collegeDto.Name;
            college.CollageCode =collegeDto.CollageCode;
 
-          await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
-          return college;
+            return college;
         }
     }
 }
