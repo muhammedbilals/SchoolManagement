@@ -44,9 +44,20 @@ namespace api.repositories
             return await _context.College.FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public Task<College> UpdateCollege()
+        public async Task<College?> UpdateCollege(int id ,CollegeDto collegeDto)
         {
-            throw new NotImplementedException();
+           var college = await _context.College.FirstOrDefaultAsync(x => x.Id ==id );
+
+           if(college==null){
+            return null;
+           }
+
+           college.Name =collegeDto.Name;
+           college.CollageCode =collegeDto.CollageCode;
+
+          await _context.SaveChangesAsync();
+
+          return college;
         }
     }
 }
