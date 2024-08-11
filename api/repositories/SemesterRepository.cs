@@ -22,7 +22,7 @@ namespace api.repositories
 
         public async Task<Semester> CreateSemester(SemesterDto semesterDto)
         {
-            var semester =SemesterMappers.ToSemester(semesterDto);
+            var semester = SemesterMappers.ToSemester(semesterDto);
            await _context.semester.AddAsync(semester);
            await _context.SaveChangesAsync();
 

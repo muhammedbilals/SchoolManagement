@@ -16,5 +16,12 @@ namespace api.mappers
                 description =semesterDto.description,
             };
         }
+
+        public static SemesterDto ToSemesterDto(Semester semester){
+            return new SemesterDto {
+                code =semester.code,
+                description =semester.description
+            };
+        }
     }
 }
