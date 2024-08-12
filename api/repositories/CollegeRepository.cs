@@ -41,6 +41,11 @@ namespace api.repositories
             return await _context.College.FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        public async Task<List<College>> GetColleges()
+        {
+           return await _context.College.ToListAsync();
+        }
+
         public async Task<College?> UpdateCollege(int id ,CollegeDto collegeDto)
         {
            var college = await _context.College.FirstOrDefaultAsync(x => x.Id ==id);

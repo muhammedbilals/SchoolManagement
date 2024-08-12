@@ -11,6 +11,7 @@ namespace api.interfaces
     {
         public Task<College> CreateCollege(College collage);
         public Task<College?> GetCollege(int id);
+        public Task<List<College>> GetColleges();
         public Task<College?> UpdateCollege(int id ,CollegeDto collegeDto);
         public Task<College?> DeleteCollege(int id);
     }

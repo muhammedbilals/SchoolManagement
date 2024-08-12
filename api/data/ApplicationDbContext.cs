@@ -18,6 +18,7 @@ namespace api.data
         public DbSet<User> Users {get;set;}
         public DbSet<College> College {get;set;}
         public DbSet<Semester> semester {get;set;}
+        public DbSet<Subject>  subject {get;set;}
 
     }
 }

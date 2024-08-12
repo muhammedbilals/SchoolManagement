@@ -27,6 +27,11 @@ namespace api.controllers
 
             return Ok(collage);
         }
+        // [HttpGet]
+        // public async Task<List<IActionResult> getCollages([FromQuery]){
+        //     return _collageRepo.GetColleges();
+
+        // }
 
         [HttpPost]
         public async Task<IActionResult> createCollege([FromBody] CreateCollageDto collageDto){
