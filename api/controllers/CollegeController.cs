@@ -16,7 +16,7 @@ namespace api.controllers
             _collageRepo = collegeRepo;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> getCollege([FromRoute] int id){
 
             var collage = await _collageRepo.GetCollege(id);
@@ -43,7 +43,7 @@ namespace api.controllers
             return CreatedAtAction(nameof(getCollege) , new {id =college.Id }, college);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> deleteCollage([FromRoute] int id){
 
             var collage = await  _collageRepo.DeleteCollege(id);
@@ -55,7 +55,7 @@ namespace api.controllers
             return NoContent();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> updateCollage ([FromRoute] int id , [FromBody] CollegeDto collegeDto){
 
             var college =  await  _collageRepo.UpdateCollege(id ,collegeDto);

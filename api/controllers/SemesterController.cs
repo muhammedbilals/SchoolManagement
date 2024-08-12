@@ -21,7 +21,7 @@ namespace api.controllers
             _semesterRepo = semesterRepo;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetSemester([FromRoute] int id){
          var semester =  await _semesterRepo.GetSemester(id);
 
@@ -42,7 +42,7 @@ namespace api.controllers
             return CreatedAtAction(nameof(GetSemester),new {id =semester.id},semester);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateSemester([FromRoute] int id , [FromBody] SemesterDto semesterDto){
             var semester = await _semesterRepo.UpdateSemester(id ,semesterDto);
 
@@ -53,7 +53,7 @@ namespace api.controllers
             return Ok(semester);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteSemester([FromRoute] int id){
             var semster = await _semesterRepo.DeleteSemester(id);
 

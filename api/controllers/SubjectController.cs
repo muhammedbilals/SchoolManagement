@@ -15,7 +15,7 @@ namespace api.controllers
             _subjectRepo = subjectRepo;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetSubject([FromRoute] int id){
             var subject = await _subjectRepo.GetSubject(id);
 
@@ -39,7 +39,7 @@ namespace api.controllers
             return CreatedAtAction(nameof(GetSubject), new {id = subject.Id},subject);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateSubject([FromRoute]int id ,[FromBody]SubjectDto subjectDto){
             var subject = await _subjectRepo.UpdateSubject(id , subjectDto.ToSubject());
 
@@ -50,7 +50,7 @@ namespace api.controllers
             return Ok(subject);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteSubject([FromRoute]int id ){
             var subject = await _subjectRepo.DeleteSubject(id);
 
