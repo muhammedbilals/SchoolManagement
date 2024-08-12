@@ -20,9 +20,9 @@ namespace api.repositories
         }
 
 
-        public Task<Subject?> GetSubjectById(int id)
+        public async Task<Subject?> GetSubjectById(int id)
         {
-            var subject = GetSubjectById(id);
+            var subject = await _context.subject.FirstOrDefaultAsync(s=> s.Id==id);
 
             return subject;
         }
@@ -47,9 +47,13 @@ namespace api.repositories
             return subject;
         }
 
-        public Task<Subject?> GetSubject(int id)
+        public async Task<Subject?> GetSubject(int id)
         {
-            var subject = GetSubjectById(id);
+            var subject = await GetSubjectById(id);
+
+            if(subject == null){
+                return null;
+            }
 
             return subject;
         }

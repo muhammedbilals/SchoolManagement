@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.dtos.subject;
 using api.interfaces;
 using api.mappers;
-using api.models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
@@ -20,7 +15,7 @@ namespace api.controllers
             _subjectRepo = subjectRepo;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetSubject([FromRoute] int id){
             var subject = await _subjectRepo.GetSubject(id);
 
@@ -38,10 +33,10 @@ namespace api.controllers
             return Ok(subjects);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateSubject([FromRoute] int id ,[FromBody] SubjectDto subjectDto){
+        public async Task<IActionResult> CreateSubject([FromBody] SubjectDto subjectDto){
             var subject = await _subjectRepo.CreateSubject(subjectDto.ToSubject());
 
-            return CreatedAtAction(nameof(GetSubject), new {id = subject.Id , subject});
+            return CreatedAtAction(nameof(GetSubject), new {id = subject.Id},subject);
         }
 
         [HttpPut("{id}")]
