@@ -21,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>{
 
 builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICollegeRepository,CollegeRepository>();
+builder.Services.AddScoped<ISemesterRepository,SemesterRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

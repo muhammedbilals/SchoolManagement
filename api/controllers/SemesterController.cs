@@ -34,6 +34,9 @@ namespace api.controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateSemeter([FromBody] SemesterDto semesterDto){
+            if(semesterDto==null){
+                return BadRequest(new {message = "Request body cannot be null"});
+            }
             var semester = await _semesterRepo.CreateSemester(semesterDto);
 
             return CreatedAtAction(nameof(GetSemester),new {id =semester.id},semester);
@@ -52,7 +55,7 @@ namespace api.controllers
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSemester([FromRoute] int id){
-            var semster = _semesterRepo.DeleteSemester(id);
+            var semster = await _semesterRepo.DeleteSemester(id);
 
             return NoContent();
         }
