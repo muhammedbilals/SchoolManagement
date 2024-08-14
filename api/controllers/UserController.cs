@@ -6,6 +6,7 @@ using api.data;
 using api.dtos.user;
 using api.interfaces;
 using api.mappers;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace api.controllers
     [ApiController]
 
     public class UserController: ControllerBase {
+        
     private readonly IUserRepository _userRepo;
 
        public UserController(IUserRepository userRepo)
@@ -41,9 +43,9 @@ namespace api.controllers
                 return NotFound(new {message = "User not found"});
             }
 
-            if (user.Password != userModel.Password){
-                return Unauthorized(new {message ="Wrong Password"});
-            }
+            // if (user. != userModel.Password){
+            //     return Unauthorized(new {message ="Wrong Password"});
+            // }
 
             return Ok(new {message ="Login Successfull", user = user.ToUserDto()});
 

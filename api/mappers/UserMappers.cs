@@ -13,14 +13,14 @@ namespace api.mappers
         {
             return new UserDto{
                  Email =user.Email,
-                 Name =user.Name
+                 Name =user.UserName
             };
         }
 
         public static User ToLoginDto (this LoginUserDto userDto ){
             return new User{
                 Email =userDto.Email,
-                Password =userDto.Password
+                PasswordHash =userDto.Password
             };
         }
     }
