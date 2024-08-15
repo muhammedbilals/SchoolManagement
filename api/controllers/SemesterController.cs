@@ -23,6 +23,9 @@ namespace api.controllers
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetSemester([FromRoute] int id){
+
+        if(!ModelState.IsValid) return BadRequest(ModelState);
+
          var semester =  await _semesterRepo.GetSemester(id);
 
          if(semester ==null){
@@ -34,6 +37,9 @@ namespace api.controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateSemeter([FromBody] SemesterDto semesterDto){
+
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
             if(semesterDto==null){
                 return BadRequest(new {message = "Request body cannot be null"});
             }
@@ -44,6 +50,9 @@ namespace api.controllers
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateSemester([FromRoute] int id , [FromBody] SemesterDto semesterDto){
+
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
             var semester = await _semesterRepo.UpdateSemester(id ,semesterDto);
 
             if(semester ==null ){
@@ -55,6 +64,9 @@ namespace api.controllers
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteSemester([FromRoute] int id){
+
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            
             var semster = await _semesterRepo.DeleteSemester(id);
 
             return NoContent();

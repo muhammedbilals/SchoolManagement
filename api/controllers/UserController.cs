@@ -33,22 +33,22 @@ namespace api.controllers
         }
 
         
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDto userDto ){
+        // [HttpPost("login")]
+        // public async Task<IActionResult> Login([FromBody] LoginUserDto userDto ){
 
-            var userModel = userDto.ToLoginDto();
-            var user =await _userRepo.GetUserByEmail(userModel.Email);
+        //     var userModel = userDto.ToLoginDto();
+        //     var user =await _userRepo.GetUserByEmail(userModel.Email);
 
-            if (user ==null){
-                return NotFound(new {message = "User not found"});
-            }
+        //     if (user ==null){
+        //         return NotFound(new {message = "User not found"});
+        //     }
 
-            // if (user. != userModel.Password){
-            //     return Unauthorized(new {message ="Wrong Password"});
-            // }
+        //     // if (user. != userModel.Password){
+        //     //     return Unauthorized(new {message ="Wrong Password"});
+        //     // }
 
-            return Ok(new {message ="Login Successfull", user = user.ToUserDto()});
+        //     return Ok(new {message ="Login Successfull", user = user.ToUserDto()});
 
-        }   
+        // }   
     }
 }

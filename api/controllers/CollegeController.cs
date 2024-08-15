@@ -19,6 +19,9 @@ namespace api.controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> getCollege([FromRoute] int id){
 
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
+
             var collage = await _collageRepo.GetCollege(id);
 
             if(collage ==null ){
@@ -36,6 +39,8 @@ namespace api.controllers
         [HttpPost]
         public async Task<IActionResult> createCollege([FromBody] CreateCollageDto collageDto){
 
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
             var college =collageDto.CreateCollageDto();
 
             await _collageRepo.CreateCollege(college);
@@ -45,6 +50,8 @@ namespace api.controllers
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> deleteCollage([FromRoute] int id){
+
+            if(!ModelState.IsValid) return BadRequest(ModelState);
 
             var collage = await  _collageRepo.DeleteCollege(id);
 

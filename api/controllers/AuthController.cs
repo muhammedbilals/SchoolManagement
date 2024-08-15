@@ -24,8 +24,7 @@ namespace api.controllers
 
         [HttpPost("register")]
         public async Task<IActionResult> register ([FromBody]RegisterDto registerDto ){
-            try
-            {
+            try {
                 if(!ModelState.IsValid) return BadRequest(ModelState);
 
                 var user = new User{
