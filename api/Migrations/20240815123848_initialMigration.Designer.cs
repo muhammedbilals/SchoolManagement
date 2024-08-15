@@ -12,8 +12,8 @@ using api.data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240814160547_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240815123848_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,26 @@ namespace api.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1f2911d4-af9b-4a1c-a412-e0de0789fe66",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "600cfb22-7a9b-4013-a207-4e3bd676190d",
+                            Name = "CollageAdmin",
+                            NormalizedName = "COLLEGEADMIN"
+                        },
+                        new
+                        {
+                            Id = "e98906e5-d49b-4a86-9713-c0766bc6f69e",
+                            Name = "Lecturer",
+                            NormalizedName = "LECTURER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

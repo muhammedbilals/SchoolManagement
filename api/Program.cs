@@ -1,8 +1,10 @@
 using System.Security.Cryptography.Xml;
 using api.data;
 using api.interfaces;
+using api.Migrations;
 using api.models;
 using api.repositories;
+using api.services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -55,6 +57,7 @@ builder.Services.AddScoped<IUserRepository,UserRepository>();
 builder.Services.AddScoped<ICollegeRepository,CollegeRepository>();
 builder.Services.AddScoped<ISemesterRepository,SemesterRepository>();
 builder.Services.AddScoped<ISubjectRepository,SubjectRepository>();
+builder.Services.AddScoped<ITokenServices, TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
