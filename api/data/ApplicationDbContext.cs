@@ -20,10 +20,13 @@ namespace api.data
         public DbSet<College> College {get;set;}
         public DbSet<Semester> semester {get;set;}
         public DbSet<Subject>  subject {get;set;}
+        public DbSet<CollageSubjects> CollageSubjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<CollageSubjects> (x => x.HasKey(p=> new {p.CollageId, p.SemesterId , p.SubjectId}));
 
             List<IdentityRole> roles = new List<IdentityRole>{
                 new IdentityRole{
@@ -31,7 +34,7 @@ namespace api.data
                     NormalizedName = "ADMIN"
                 },
                 new IdentityRole{
-                    Name = "CollegeAdmin", // Corrected here
+                    Name = "CollegeAdmin", 
                     NormalizedName = "COLLEGEADMIN"
                 },
                     new IdentityRole{
