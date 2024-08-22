@@ -28,6 +28,10 @@ namespace api.data
 
             builder.Entity<CollageSubjects> (x => x.HasKey(p=> new {p.CollageId, p.SemesterId , p.SubjectId}));
 
+            // builder.Entity<CollageSubjects> ()
+            // .HasOne(u => u.Collage)
+            // .WithMany(u => u.coll)
+
             List<IdentityRole> roles = new List<IdentityRole>{
                 new IdentityRole{
                     Name = "Admin",
