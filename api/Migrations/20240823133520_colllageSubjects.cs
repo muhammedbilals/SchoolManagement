@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class colllageSubjects : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -201,14 +201,46 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CollageSubjects",
+                columns: table => new
+                {
+                    CollageId = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    SemesterId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollageSubjects", x => new { x.CollageId, x.SemesterId, x.SubjectId });
+                    table.ForeignKey(
+                        name: "FK_CollageSubjects_College_CollageId",
+                        column: x => x.CollageId,
+                        principalTable: "College",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollageSubjects_semester_SemesterId",
+                        column: x => x.SemesterId,
+                        principalTable: "semester",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollageSubjects_subject_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1f2911d4-af9b-4a1c-a412-e0de0789fe66", null, "Admin", "ADMIN" },
-                    { "600cfb22-7a9b-4013-a207-4e3bd676190d", null, "CollageAdmin", "COLLEGEADMIN" },
-                    { "e98906e5-d49b-4a86-9713-c0766bc6f69e", null, "Lecturer", "LECTURER" }
+                    { "525d896f-a07d-46bf-aa13-6aa67dc9751d", null, "Lecturer", "LECTURER" },
+                    { "6c34d391-9b76-4409-9ad5-ebaba8fc183c", null, "CollegeAdmin", "COLLEGEADMIN" },
+                    { "6d98ccb9-ff8c-40a0-86a3-332188854b18", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -249,6 +281,16 @@ namespace api.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollageSubjects_SemesterId",
+                table: "CollageSubjects",
+                column: "SemesterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollageSubjects_SubjectId",
+                table: "CollageSubjects",
+                column: "SubjectId");
         }
 
         /// <inheritdoc />
@@ -270,6 +312,15 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CollageSubjects");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "College");
 
             migrationBuilder.DropTable(
@@ -277,12 +328,6 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "subject");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

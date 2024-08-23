@@ -51,19 +51,19 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1f2911d4-af9b-4a1c-a412-e0de0789fe66",
+                            Id = "6d98ccb9-ff8c-40a0-86a3-332188854b18",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "600cfb22-7a9b-4013-a207-4e3bd676190d",
-                            Name = "CollageAdmin",
+                            Id = "6c34d391-9b76-4409-9ad5-ebaba8fc183c",
+                            Name = "CollegeAdmin",
                             NormalizedName = "COLLEGEADMIN"
                         },
                         new
                         {
-                            Id = "e98906e5-d49b-4a86-9713-c0766bc6f69e",
+                            Id = "525d896f-a07d-46bf-aa13-6aa67dc9751d",
                             Name = "Lecturer",
                             NormalizedName = "LECTURER"
                         });
@@ -173,6 +173,29 @@ namespace api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("api.models.CollageSubjects", b =>
+                {
+                    b.Property<int>("CollageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("CollageId", "SemesterId", "SubjectId");
+
+                    b.HasIndex("SemesterId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("CollageSubjects");
                 });
 
             modelBuilder.Entity("api.models.College", b =>
@@ -356,6 +379,48 @@ namespace api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("api.models.CollageSubjects", b =>
+                {
+                    b.HasOne("api.models.College", "Collage")
+                        .WithMany("collageSubjects")
+                        .HasForeignKey("CollageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.models.Semester", "Semester")
+                        .WithMany("collageSubjects")
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.models.Subject", "Subject")
+                        .WithMany("collageSubjects")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Collage");
+
+                    b.Navigation("Semester");
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("api.models.College", b =>
+                {
+                    b.Navigation("collageSubjects");
+                });
+
+            modelBuilder.Entity("api.models.Semester", b =>
+                {
+                    b.Navigation("collageSubjects");
+                });
+
+            modelBuilder.Entity("api.models.Subject", b =>
+                {
+                    b.Navigation("collageSubjects");
                 });
 #pragma warning restore 612, 618
         }

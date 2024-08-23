@@ -28,9 +28,20 @@ namespace api.data
 
             builder.Entity<CollageSubjects> (x => x.HasKey(p=> new {p.CollageId, p.SemesterId , p.SubjectId}));
 
-            // builder.Entity<CollageSubjects> ()
-            // .HasOne(u => u.Collage)
-            // .WithMany(u => u.coll)
+            builder.Entity<CollageSubjects> ()
+            .HasOne(u => u.Collage)
+            .WithMany(u => u.collageSubjects)
+            .HasForeignKey(p => p.CollageId);
+
+             builder.Entity<CollageSubjects> ()
+            .HasOne(u => u.Semester)
+            .WithMany(u => u.collageSubjects)
+            .HasForeignKey(p => p.SemesterId);
+
+             builder.Entity<CollageSubjects> ()
+            .HasOne(u => u.Subject)
+            .WithMany(u => u.collageSubjects)
+            .HasForeignKey(p => p.SubjectId);
 
             List<IdentityRole> roles = new List<IdentityRole>{
                 new IdentityRole{
