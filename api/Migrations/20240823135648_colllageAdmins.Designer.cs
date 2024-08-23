@@ -12,8 +12,8 @@ using api.data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240823133520_colllageSubjects")]
-    partial class colllageSubjects
+    [Migration("20240823135648_colllageAdmins")]
+    partial class colllageAdmins
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,19 +54,19 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6d98ccb9-ff8c-40a0-86a3-332188854b18",
+                            Id = "6f9e84c7-9f0d-4a1d-882f-b31f8b0d34aa",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "6c34d391-9b76-4409-9ad5-ebaba8fc183c",
+                            Id = "bab66b7b-6bd8-4c55-99e8-12a2cf3740cb",
                             Name = "CollegeAdmin",
                             NormalizedName = "COLLEGEADMIN"
                         },
                         new
                         {
-                            Id = "525d896f-a07d-46bf-aa13-6aa67dc9751d",
+                            Id = "45580b7f-26dd-4bda-a7ae-9794d44d593b",
                             Name = "Lecturer",
                             NormalizedName = "LECTURER"
                         });
@@ -176,6 +176,24 @@ namespace api.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("api.models.CollageAdmins", b =>
+                {
+                    b.Property<int>("CollageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("CollageId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CollageAdmins");
                 });
 
             modelBuilder.Entity("api.models.CollageSubjects", b =>
@@ -384,22 +402,41 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("api.models.CollageAdmins", b =>
+                {
+                    b.HasOne("api.models.College", "College")
+                        .WithMany("CollageAdmins")
+                        .HasForeignKey("CollageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.models.User", "User")
+                        .WithMany("CollageAdmins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("College");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("api.models.CollageSubjects", b =>
                 {
                     b.HasOne("api.models.College", "Collage")
-                        .WithMany("collageSubjects")
+                        .WithMany("CollageSubjects")
                         .HasForeignKey("CollageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("api.models.Semester", "Semester")
-                        .WithMany("collageSubjects")
+                        .WithMany("CollageSubjects")
                         .HasForeignKey("SemesterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("api.models.Subject", "Subject")
-                        .WithMany("collageSubjects")
+                        .WithMany("CollageSubjects")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -413,17 +450,24 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.models.College", b =>
                 {
-                    b.Navigation("collageSubjects");
+                    b.Navigation("CollageAdmins");
+
+                    b.Navigation("CollageSubjects");
                 });
 
             modelBuilder.Entity("api.models.Semester", b =>
                 {
-                    b.Navigation("collageSubjects");
+                    b.Navigation("CollageSubjects");
                 });
 
             modelBuilder.Entity("api.models.Subject", b =>
                 {
-                    b.Navigation("collageSubjects");
+                    b.Navigation("CollageSubjects");
+                });
+
+            modelBuilder.Entity("api.models.User", b =>
+                {
+                    b.Navigation("CollageAdmins");
                 });
 #pragma warning restore 612, 618
         }

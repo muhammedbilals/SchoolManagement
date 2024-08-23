@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class colllageSubjects : Migration
+    public partial class colllageAdmins : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -202,6 +202,31 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CollageAdmins",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CollageId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollageAdmins", x => new { x.CollageId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_CollageAdmins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollageAdmins_College_CollageId",
+                        column: x => x.CollageId,
+                        principalTable: "College",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CollageSubjects",
                 columns: table => new
                 {
@@ -238,9 +263,9 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "525d896f-a07d-46bf-aa13-6aa67dc9751d", null, "Lecturer", "LECTURER" },
-                    { "6c34d391-9b76-4409-9ad5-ebaba8fc183c", null, "CollegeAdmin", "COLLEGEADMIN" },
-                    { "6d98ccb9-ff8c-40a0-86a3-332188854b18", null, "Admin", "ADMIN" }
+                    { "45580b7f-26dd-4bda-a7ae-9794d44d593b", null, "Lecturer", "LECTURER" },
+                    { "6f9e84c7-9f0d-4a1d-882f-b31f8b0d34aa", null, "Admin", "ADMIN" },
+                    { "bab66b7b-6bd8-4c55-99e8-12a2cf3740cb", null, "CollegeAdmin", "COLLEGEADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -283,6 +308,11 @@ namespace api.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CollageAdmins_UserId",
+                table: "CollageAdmins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CollageSubjects_SemesterId",
                 table: "CollageSubjects",
                 column: "SemesterId");
@@ -310,6 +340,9 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CollageAdmins");
 
             migrationBuilder.DropTable(
                 name: "CollageSubjects");

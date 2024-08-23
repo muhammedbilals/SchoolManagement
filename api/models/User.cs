@@ -8,6 +8,7 @@ namespace api.models
 {
     public class User : IdentityUser
     {
+        public List<CollageAdmins> CollageAdmins {get; set;} = new List<CollageAdmins>();
        
     }
 }

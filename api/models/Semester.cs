@@ -10,7 +10,7 @@ namespace api.models
         public int id {get; set;} 
         public string code {get; set;} = string.Empty;
         public string description {get; set;}  = string.Empty;
-        public List<CollageSubjects> collageSubjects {get; set;} = new List<CollageSubjects>();
+        public List<CollageSubjects> CollageSubjects {get; set;} = new List<CollageSubjects>();
 
 
     }
