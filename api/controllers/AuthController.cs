@@ -26,7 +26,7 @@ namespace api.controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> register ([FromBody]RegisterDto registerDto ){
+        public async Task<IActionResult> Register ([FromBody]RegisterDto registerDto ){
             try {
                 if(!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -59,7 +59,7 @@ namespace api.controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> login([FromBody] LoginUserDto loginUserDto){
+        public async Task<IActionResult> Login([FromBody] LoginUserDto loginUserDto){
 
             if(!ModelState.IsValid) return BadRequest(ModelState);
 

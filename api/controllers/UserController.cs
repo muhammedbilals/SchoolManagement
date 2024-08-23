@@ -32,23 +32,6 @@ namespace api.controllers
             return Ok(UserDto);
         }
 
-        
-        // [HttpPost("login")]
-        // public async Task<IActionResult> Login([FromBody] LoginUserDto userDto ){
-
-        //     var userModel = userDto.ToLoginDto();
-        //     var user =await _userRepo.GetUserByEmail(userModel.Email);
-
-        //     if (user ==null){
-        //         return NotFound(new {message = "User not found"});
-        //     }
-
-        //     // if (user. != userModel.Password){
-        //     //     return Unauthorized(new {message ="Wrong Password"});
-        //     // }
-
-        //     return Ok(new {message ="Login Successfull", user = user.ToUserDto()});
-
-        // }   
+    
     }
 }

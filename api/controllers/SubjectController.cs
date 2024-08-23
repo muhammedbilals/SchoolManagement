@@ -29,7 +29,7 @@ namespace api.controllers
             return Ok(subject);
         }
 
-        [HttpGet]
+        [HttpGet("")]
         public async Task<IActionResult> getSubjects (){
 
             if(!ModelState.IsValid) return BadRequest(ModelState);
