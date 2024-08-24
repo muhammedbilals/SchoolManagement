@@ -11,7 +11,6 @@ namespace api.models
         public string SubjectCode { get; set; } = string.Empty;
         public string CourseId { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
-        public List<CollageSubjects> CollageSubjects {get; set;} = new List<CollageSubjects>();
 
     }
 }

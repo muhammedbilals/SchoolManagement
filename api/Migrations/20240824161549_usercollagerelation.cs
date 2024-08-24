@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class colllageAdmins : Migration
+    public partial class usercollagerelation : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,21 +78,6 @@ namespace api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_semester", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "subject",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CourseId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_subject", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,58 +187,46 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CollageAdmins",
+                name: "subject",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CollageId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CollegeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CollageAdmins", x => new { x.CollageId, x.UserId });
+                    table.PrimaryKey("PK_subject", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CollageAdmins_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_subject_College_CollegeId",
+                        column: x => x.CollegeId,
+                        principalTable: "College",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserColleges",
+                columns: table => new
+                {
+                    CollegeId = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserColleges", x => new { x.CollegeId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_UserColleges_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CollageAdmins_College_CollageId",
-                        column: x => x.CollageId,
+                        name: "FK_UserColleges_College_CollegeId",
+                        column: x => x.CollegeId,
                         principalTable: "College",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CollageSubjects",
-                columns: table => new
-                {
-                    CollageId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false),
-                    SemesterId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CollageSubjects", x => new { x.CollageId, x.SemesterId, x.SubjectId });
-                    table.ForeignKey(
-                        name: "FK_CollageSubjects_College_CollageId",
-                        column: x => x.CollageId,
-                        principalTable: "College",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CollageSubjects_semester_SemesterId",
-                        column: x => x.SemesterId,
-                        principalTable: "semester",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CollageSubjects_subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "subject",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -263,9 +236,9 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "45580b7f-26dd-4bda-a7ae-9794d44d593b", null, "Lecturer", "LECTURER" },
-                    { "6f9e84c7-9f0d-4a1d-882f-b31f8b0d34aa", null, "Admin", "ADMIN" },
-                    { "bab66b7b-6bd8-4c55-99e8-12a2cf3740cb", null, "CollegeAdmin", "COLLEGEADMIN" }
+                    { "2e95baf2-6e14-4742-a56a-c3c67b951975", null, "Lecturer", "LECTURER" },
+                    { "534ad906-e132-44e2-87ce-2f9e9eea4353", null, "Admin", "ADMIN" },
+                    { "de7c729a-f034-408f-85b0-4dd40a08d53a", null, "CollegeAdmin", "COLLEGEADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -308,19 +281,14 @@ namespace api.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollageAdmins_UserId",
-                table: "CollageAdmins",
-                column: "UserId");
+                name: "IX_subject_CollegeId",
+                table: "subject",
+                column: "CollegeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CollageSubjects_SemesterId",
-                table: "CollageSubjects",
-                column: "SemesterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CollageSubjects_SubjectId",
-                table: "CollageSubjects",
-                column: "SubjectId");
+                name: "IX_UserColleges_UsersId",
+                table: "UserColleges",
+                column: "UsersId");
         }
 
         /// <inheritdoc />
@@ -342,10 +310,13 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CollageAdmins");
+                name: "semester");
 
             migrationBuilder.DropTable(
-                name: "CollageSubjects");
+                name: "subject");
+
+            migrationBuilder.DropTable(
+                name: "UserColleges");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -355,12 +326,6 @@ namespace api.Migrations
 
             migrationBuilder.DropTable(
                 name: "College");
-
-            migrationBuilder.DropTable(
-                name: "semester");
-
-            migrationBuilder.DropTable(
-                name: "subject");
         }
     }
 }

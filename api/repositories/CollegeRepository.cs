@@ -41,6 +41,13 @@ namespace api.repositories
             return await _context.College.FirstOrDefaultAsync(s => s.Id == id);
         }
 
+        // public async Task<List<College>?> GetCollegesWithId(User user)
+        // {
+        //     return await _context.College.Where(s => s.Id == user.Id).Select(
+
+        //     );
+        // }
+
         public async Task<List<College>> GetColleges()
         {
            return await _context.College.ToListAsync();

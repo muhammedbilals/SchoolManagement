@@ -20,41 +20,48 @@ namespace api.data
         public DbSet<College> College {get;set;}
         public DbSet<Semester> semester {get;set;}
         public DbSet<Subject>  subject {get;set;}
-        public DbSet<CollageSubjects> CollageSubjects { get; set; }
+        // public DbSet<CollageSubjects> CollageSubjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<CollageSubjects> (x => x.HasKey(p=> new {p.CollageId, p.SemesterId , p.SubjectId}));
+           builder.Entity<User>()
+            .HasMany(u => u.College)
+            .WithMany(c => c.Users)
+            .UsingEntity(j => j.ToTable("UserColleges"));
 
-            builder.Entity<CollageSubjects> ()
-            .HasOne(u => u.Collage)
-            .WithMany(u => u.CollageSubjects)
-            .HasForeignKey(p => p.CollageId);
+            // builder.Entity<CollageSubjects> (x => x.HasKey(p=> new {p.CollageId, p.SemesterId , p.SubjectId}));
 
-             builder.Entity<CollageSubjects> ()
-            .HasOne(u => u.Semester)
-            .WithMany(u => u.CollageSubjects)
-            .HasForeignKey(p => p.SemesterId);
+            // builder.Entity<CollageSubjects> ()
+            // .HasOne(u => u.Collage)
+            // .WithMany(u => u.CollageSubjects)
+            // .HasForeignKey(p => p.CollageId);
 
-             builder.Entity<CollageSubjects> ()
-            .HasOne(u => u.Subject)
-            .WithMany(u => u.CollageSubjects)
-            .HasForeignKey(p => p.SubjectId);
+            //  builder.Entity<CollageSubjects> ()
+            // .HasOne(u => u.Semester)
+            // .WithMany(u => u.CollageSubjects)
+            // .HasForeignKey(p => p.SemesterId);
+
+            //  builder.Entity<CollageSubjects> ()
+            // .HasOne(u => u.Subject)
+            // .WithMany(u => u.CollageSubjects)
+            // .HasForeignKey(p => p.SubjectId);
 
 
-            builder.Entity<CollageAdmins> (x => x.HasKey(p => new { p.CollageId , p.UserId}));
+            // builder.Entity<CollageAdmins> (x => x.HasKey(p => new { p.CollageId , p.UserId}));
 
-            builder.Entity<CollageAdmins> ()
-            .HasOne(u => u.College)
-            .WithMany(u => u.CollageAdmins)
-            .HasForeignKey(p => p.CollageId);
+            // builder.Entity<CollageAdmins> ()
+            // .HasOne(u => u.College)
+            // .WithMany(u => u.CollageAdmins)
+            // .HasForeignKey(p => p.CollageId);
 
-            builder.Entity<CollageAdmins> ()
-            .HasOne(u => u.User)
-            .WithMany(u => u.CollageAdmins)
-            .HasForeignKey(p => p.UserId);
+            // builder.Entity<CollageAdmins> ()
+            // .HasOne(u => u.User)
+            // .WithMany(u => u.CollageAdmins)
+            // .HasForeignKey(p => p.UserId);
+
+
 
             List<IdentityRole> roles = new List<IdentityRole>{
                 new IdentityRole{

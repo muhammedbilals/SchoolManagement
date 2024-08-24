@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.controllers
 {
-    [Route("api/users")]
+    [Route("api/user")]
     [ApiController]
 
     public class UserController: ControllerBase {
@@ -32,6 +32,20 @@ namespace api.controllers
             return Ok(UserDto);
         }
 
+        [HttpGet("{id:string}/college")]
+        public async Task<IActionResult> GetCollagesDetails([FromRoute] string id ){
+
+            
+            return NoContent();
+        }
+        // [HttpGet("{id:string}/semester")]
+        // public async Task<IActionResult> GetSemesterDetails([FromRoute] string id ){
+        //     return NoContent();
+        // }
+        // [HttpGet("{id:string}/semeste")]
+        // public async Task<IActionResult> GetStudentsDetails([FromRoute] string id ){
+        //     return NoContent();
+        // }
     
     }
 }

@@ -10,7 +10,7 @@ namespace api.models
         public int Id {set; get;}
         public string CollageCode {set; get;} = string.Empty;
         public string Name { get; set; } =string.Empty;
-        public List<CollageSubjects> CollageSubjects {get; set;} = new List<CollageSubjects>();
-        public List<CollageAdmins> CollageAdmins {get; set;} = new List<CollageAdmins>();
+        public List<Subject> Subjects {get; set;} = new List<Subject>();
+        public ICollection<User> Users { get; set; } 
     }
 }

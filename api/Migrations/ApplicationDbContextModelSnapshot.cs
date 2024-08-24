@@ -22,6 +22,21 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CollegeUser", b =>
+                {
+                    b.Property<int>("CollegeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("CollegeId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("UserColleges", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -51,19 +66,19 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6f9e84c7-9f0d-4a1d-882f-b31f8b0d34aa",
+                            Id = "534ad906-e132-44e2-87ce-2f9e9eea4353",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "bab66b7b-6bd8-4c55-99e8-12a2cf3740cb",
+                            Id = "de7c729a-f034-408f-85b0-4dd40a08d53a",
                             Name = "CollegeAdmin",
                             NormalizedName = "COLLEGEADMIN"
                         },
                         new
                         {
-                            Id = "45580b7f-26dd-4bda-a7ae-9794d44d593b",
+                            Id = "2e95baf2-6e14-4742-a56a-c3c67b951975",
                             Name = "Lecturer",
                             NormalizedName = "LECTURER"
                         });
@@ -175,47 +190,6 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("api.models.CollageAdmins", b =>
-                {
-                    b.Property<int>("CollageId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("CollageId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CollageAdmins");
-                });
-
-            modelBuilder.Entity("api.models.CollageSubjects", b =>
-                {
-                    b.Property<int>("CollageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SemesterId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("CollageId", "SemesterId", "SubjectId");
-
-                    b.HasIndex("SemesterId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.ToTable("CollageSubjects");
-                });
-
             modelBuilder.Entity("api.models.College", b =>
                 {
                     b.Property<int>("Id")
@@ -266,6 +240,9 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CollegeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CourseId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -279,6 +256,8 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CollegeId");
 
                     b.ToTable("subject");
                 });
@@ -348,6 +327,21 @@ namespace api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("CollegeUser", b =>
+                {
+                    b.HasOne("api.models.College", null)
+                        .WithMany()
+                        .HasForeignKey("CollegeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -399,72 +393,16 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.models.CollageAdmins", b =>
+            modelBuilder.Entity("api.models.Subject", b =>
                 {
-                    b.HasOne("api.models.College", "College")
-                        .WithMany("CollageAdmins")
-                        .HasForeignKey("CollageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.models.User", "User")
-                        .WithMany("CollageAdmins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("College");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("api.models.CollageSubjects", b =>
-                {
-                    b.HasOne("api.models.College", "Collage")
-                        .WithMany("CollageSubjects")
-                        .HasForeignKey("CollageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.models.Semester", "Semester")
-                        .WithMany("CollageSubjects")
-                        .HasForeignKey("SemesterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.models.Subject", "Subject")
-                        .WithMany("CollageSubjects")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Collage");
-
-                    b.Navigation("Semester");
-
-                    b.Navigation("Subject");
+                    b.HasOne("api.models.College", null)
+                        .WithMany("Subjects")
+                        .HasForeignKey("CollegeId");
                 });
 
             modelBuilder.Entity("api.models.College", b =>
                 {
-                    b.Navigation("CollageAdmins");
-
-                    b.Navigation("CollageSubjects");
-                });
-
-            modelBuilder.Entity("api.models.Semester", b =>
-                {
-                    b.Navigation("CollageSubjects");
-                });
-
-            modelBuilder.Entity("api.models.Subject", b =>
-                {
-                    b.Navigation("CollageSubjects");
-                });
-
-            modelBuilder.Entity("api.models.User", b =>
-                {
-                    b.Navigation("CollageAdmins");
+                    b.Navigation("Subjects");
                 });
 #pragma warning restore 612, 618
         }
