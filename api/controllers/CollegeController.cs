@@ -17,11 +17,10 @@ namespace api.controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> getCollege([FromRoute] int id){
+        public async Task<IActionResult> GetCollege([FromRoute] int id){
 
             if(!ModelState.IsValid) return BadRequest(ModelState);
-
-
+            
             var collage = await _collageRepo.GetCollege(id);
 
             if(collage ==null ){
@@ -30,14 +29,22 @@ namespace api.controllers
 
             return Ok(collage);
         }
-        // [HttpGet]
-        // public async Task<List<IActionResult> getCollages([FromQuery]){
-        //     return _collageRepo.GetColleges();
+        [HttpGet]
+        public async Task<IActionResult> GetColleges(){
 
-        // }
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+            
+            var collage = await _collageRepo.GetColleges();
+
+            if(collage ==null ){
+                return NotFound();
+            }
+
+            return Ok(collage);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> createCollege([FromBody] CreateCollageDto collageDto){
+        public async Task<IActionResult> CreateCollege([FromBody] CreateCollageDto collageDto){
 
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -45,11 +52,11 @@ namespace api.controllers
 
             await _collageRepo.CreateCollege(college);
 
-            return CreatedAtAction(nameof(getCollege) , new {id =college.Id }, college);
+            return CreatedAtAction(nameof(GetCollege) , new {id =college.Id }, college);
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> deleteCollage([FromRoute] int id){
+        public async Task<IActionResult> DeleteCollage([FromRoute] int id){
 
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -63,7 +70,7 @@ namespace api.controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> updateCollage ([FromRoute] int id , [FromBody] CollegeDto collegeDto){
+        public async Task<IActionResult> UpdateCollage ([FromRoute] int id , [FromBody] CollegeDto collegeDto){
 
             var college =  await  _collageRepo.UpdateCollege(id ,collegeDto);
 
