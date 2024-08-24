@@ -20,7 +20,6 @@ namespace api.data
         public DbSet<College> College {get;set;}
         public DbSet<Semester> semester {get;set;}
         public DbSet<Subject>  subject {get;set;}
-        // public DbSet<CollageSubjects> CollageSubjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

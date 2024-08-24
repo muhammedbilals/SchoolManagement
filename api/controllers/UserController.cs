@@ -18,10 +18,12 @@ namespace api.controllers
     public class UserController: ControllerBase {
         
     private readonly IUserRepository _userRepo;
+    private readonly ICollegeRepository _collegeRepo;
 
-       public UserController(IUserRepository userRepo)
+       public UserController(IUserRepository userRepo,ICollegeRepository collegeRepo)
        {
             _userRepo =userRepo;
+            _collegeRepo = collegeRepo;
        }
        [HttpGet("getusers")]
         public async Task<IActionResult> GetUsers(){
@@ -32,11 +34,17 @@ namespace api.controllers
             return Ok(UserDto);
         }
 
-        [HttpGet("{id:string}/college")]
+        [HttpGet("{id}/college")]
         public async Task<IActionResult> GetCollagesDetails([FromRoute] string id ){
 
+            var user =await _userRepo.GetUserById(id);
+
+            if(user ==null){
+                return NotFound();
+            }
+            var collages =await _collegeRepo.GetCollegesById(user.Id.ToString());
             
-            return NoContent();
+            return Ok(collages);
         }
         // [HttpGet("{id:string}/semester")]
         // public async Task<IActionResult> GetSemesterDetails([FromRoute] string id ){

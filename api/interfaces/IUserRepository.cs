@@ -10,6 +10,8 @@ namespace api.interfaces
     {
         public Task<List<User>> GetUsers();
         public  Task<User?> GetUserByEmail(string email);
+        public  Task<User?> GetUserById(string Id);
+
 
     }
 }
