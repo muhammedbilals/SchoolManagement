@@ -80,11 +80,21 @@ namespace api.controllers
         [HttpPost("{collageId}/users/{userId}")]
         public async Task<IActionResult> AddUserToCollage ([FromRoute]int collageId,string userId){
 
-            var result =await _collageRepo.AddUserToCollage(collageId,userId);
+            var result =await _collageRepo.AddUserToCollege(collageId,userId);
             
             if(!result.Success) return BadRequest(result.Message);
 
             return Ok(result);
+        }
+
+        [HttpDelete("{collageId}/users/{userId}")]
+        public async Task<IActionResult> RemoveUserFromCollege ([FromRoute]int collageId,string userId){
+
+            var result =await _collageRepo.RemoveUserFromCollege(collageId,userId);
+            
+            if(!result.Success) return BadRequest(result.Message);
+
+            return NoContent();
         }
     }
 }

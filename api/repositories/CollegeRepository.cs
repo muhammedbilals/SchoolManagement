@@ -17,7 +17,7 @@ namespace api.repositories
             _context = context;
         }
 
-        public async Task<DbResult<College>> AddUserToCollage(int collegeId, string userId)
+        public async Task<DbResult<College>> AddUserToCollege(int collegeId, string userId)
         {
             var user =await _context.Users.Include(u =>u.College).FirstOrDefaultAsync(u =>u.Id == userId);
 
@@ -27,12 +27,32 @@ namespace api.repositories
 
             if(college == null) return DbResult<College>.Failure("Collage not found.");
 
-            if(user.College.Contains(college)) return DbResult<College>.Failure("Already added");;
+            if(user.College.Contains(college)) return DbResult<College>.Failure("Already added");
 
             user.College.Add(college);
             college.Users.Add(user);
 
             await _context.SaveChangesAsync();
+            return DbResult<College>.SuccessResult(college);
+        }
+
+        public async Task<DbResult<College>> RemoveUserFromCollege(int collegeId, string userId)
+        {
+            var user =await _context.Users.Include(u =>u.College).FirstOrDefaultAsync(u =>u.Id == userId);
+
+            if(user == null) return DbResult<College>.Failure("User not found.");
+
+            var college = await _context.College.Include(u =>u.Users).FirstOrDefaultAsync(u =>u.Id == collegeId);
+
+            if(college == null) return DbResult<College>.Failure("Collage not found.");
+
+            if(!user.College.Contains(college)) return DbResult<College>.Failure("User is not associated with this college");
+
+            user.College.Remove(college);
+            college.Users.Remove(user);
+
+            await _context.SaveChangesAsync();
+
             return DbResult<College>.SuccessResult(college);
         }
 
@@ -70,6 +90,8 @@ namespace api.repositories
         {
            return await _context.College.Where(s => s.Users.Any(c => c.Id == id)).ToListAsync();
         }
+
+
 
         public async Task<College?> UpdateCollege(int id ,CollegeDto collegeDto)
         {
