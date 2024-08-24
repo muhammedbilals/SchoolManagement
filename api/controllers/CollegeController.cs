@@ -76,5 +76,15 @@ namespace api.controllers
 
             return Ok(college);
         }
+
+        [HttpPost("{collageId}/users/{userId}")]
+        public async Task<IActionResult> AddUserToCollage ([FromRoute]int collageId,string userId){
+
+            var result =await _collageRepo.AddUserToCollage(collageId,userId);
+            
+            if(!result.Success) return BadRequest(result.Message);
+
+            return Ok(result);
+        }
     }
 }

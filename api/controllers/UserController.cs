@@ -25,6 +25,7 @@ namespace api.controllers
             _userRepo =userRepo;
             _collegeRepo = collegeRepo;
        }
+
        [HttpGet("getusers")]
         public async Task<IActionResult> GetUsers(){
 
@@ -35,25 +36,17 @@ namespace api.controllers
         }
 
         [HttpGet("{id}/college")]
-        public async Task<IActionResult> GetCollagesDetails([FromRoute] string id ){
+        public async Task<IActionResult> GetCollagesByUserId([FromRoute] string id ){
 
             var user =await _userRepo.GetUserById(id);
 
             if(user ==null){
-                return NotFound();
+                return NotFound("User with ID {userId} not found.");
             }
             var collages =await _collegeRepo.GetCollegesById(user.Id.ToString());
             
             return Ok(collages);
         }
-        // [HttpGet("{id:string}/semester")]
-        // public async Task<IActionResult> GetSemesterDetails([FromRoute] string id ){
-        //     return NoContent();
-        // }
-        // [HttpGet("{id:string}/semeste")]
-        // public async Task<IActionResult> GetStudentsDetails([FromRoute] string id ){
-        //     return NoContent();
-        // }
     
     }
 }

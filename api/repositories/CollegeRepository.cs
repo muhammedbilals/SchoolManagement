@@ -3,6 +3,7 @@ using api.data;
 using api.dtos.college;
 using api.interfaces;
 using api.models;
+using api.utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.repositories
@@ -14,6 +15,25 @@ namespace api.repositories
         public CollegeRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<DbResult<College>> AddUserToCollage(int collegeId, string userId)
+        {
+            var user =await _context.Users.Include(u =>u.College).FirstOrDefaultAsync(u =>u.Id == userId);
+
+            if(user == null) return DbResult<College>.Failure("User not found.");
+
+            var college = await _context.College.Include(u =>u.Users).FirstOrDefaultAsync(u =>u.Id == collegeId);
+
+            if(college == null) return DbResult<College>.Failure("Collage not found.");
+
+            if(user.College.Contains(college)) return DbResult<College>.Failure("Already added");;
+
+            user.College.Add(college);
+            college.Users.Add(user);
+
+            await _context.SaveChangesAsync();
+            return DbResult<College>.SuccessResult(college);
         }
 
         public async Task<College> CreateCollege(College collage)
