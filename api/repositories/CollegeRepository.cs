@@ -67,18 +67,17 @@ namespace api.repositories
         {
           var college =await _context.College.FirstOrDefaultAsync(a => a.Id ==id);
 
-          if(college==null){
-            return null;
-          }
-          _context.Remove(college);
-          await _context.SaveChangesAsync();
+            if(college==null) return null;
 
-          return college;
+            _context.Remove(college);
+            await _context.SaveChangesAsync();
+
+            return college;
         }
 
         public async Task<College?> GetCollege(int id)
         {
-            return await _context.College.FirstOrDefaultAsync(s => s.Id == id);
+            return await _context.College.Include(c => c.Users).FirstOrDefaultAsync(s => s.Id == id);
         }
         
         public async Task<List<College>> GetColleges()
@@ -97,9 +96,7 @@ namespace api.repositories
         {
            var college = await _context.College.FirstOrDefaultAsync(x => x.Id ==id);
 
-           if(college==null){
-            return null;
-           }
+           if(college==null) return null;
 
            college.Name =collegeDto.Name;
            college.CollageCode =collegeDto.CollageCode;

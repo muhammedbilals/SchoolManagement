@@ -96,5 +96,14 @@ namespace api.controllers
 
             return NoContent();
         }
+        [HttpGet("{collageId}/users")]
+        public async Task<IActionResult> GetUsersByCollege ([FromRoute] int collageId){
+            // TODO: Wrong data 
+            var Collage = await _collageRepo.GetCollege(collageId);
+
+            if(Collage == null) return BadRequest("No collage found");
+
+            return Ok(Collage.Users);
+        }
     }
 }
