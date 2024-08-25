@@ -105,5 +105,20 @@ namespace api.repositories
 
             return college;
         }
+
+        public Task<DbResult<College>> AddSemesterToCollege(int collegeId, string semesterId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DbResult<College>> RemoveSemesterFromCollege(int collegeId, string semesterId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DbResult<List<Semester>>> GetSemestersByCollage(int collegeId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

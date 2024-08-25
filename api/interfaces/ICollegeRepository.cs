@@ -18,7 +18,9 @@ namespace api.interfaces
         public Task<College?> DeleteCollege(int id);
         public Task<DbResult<College>> AddUserToCollege(int collegeId, string userId);
         public Task<DbResult<College>> RemoveUserFromCollege(int collegeId, string userId);
-
+        public Task<DbResult<College>> AddSemesterToCollege(int collegeId, string semesterId);
+        public Task<DbResult<College>> RemoveSemesterFromCollege(int collegeId, string semesterId);
+        public Task<DbResult<List<Semester>>> GetSemestersByCollage(int collegeId);
 
     }
 }

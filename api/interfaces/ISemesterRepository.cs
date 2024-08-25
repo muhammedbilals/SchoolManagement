@@ -10,6 +10,8 @@ namespace api.interfaces
     public interface ISemesterRepository
     {
         public  Task<Semester?> GetSemester(int id);
+        public  Task<Semester?> GetSemesters();
+
         public  Task<Semester> CreateSemester(SemesterDto semesterDto);
         public  Task<Semester?> UpdateSemester(int id ,SemesterDto semesterDto);
         public  Task<Semester?> DeleteSemester(int id);
