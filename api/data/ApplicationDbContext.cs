@@ -30,35 +30,15 @@ namespace api.data
             .WithMany(c => c.Users)
             .UsingEntity(j => j.ToTable("UserColleges"));
 
-            // builder.Entity<CollageSubjects> (x => x.HasKey(p=> new {p.CollageId, p.SemesterId , p.SubjectId}));
+            builder.Entity<College>()
+            .HasMany(u =>u.Semesters)
+            .WithMany(c =>c.Colleges)
+            .UsingEntity(j =>j.ToTable("CollageSemesterSubject"));
 
-            // builder.Entity<CollageSubjects> ()
-            // .HasOne(u => u.Collage)
-            // .WithMany(u => u.CollageSubjects)
-            // .HasForeignKey(p => p.CollageId);
-
-            //  builder.Entity<CollageSubjects> ()
-            // .HasOne(u => u.Semester)
-            // .WithMany(u => u.CollageSubjects)
-            // .HasForeignKey(p => p.SemesterId);
-
-            //  builder.Entity<CollageSubjects> ()
-            // .HasOne(u => u.Subject)
-            // .WithMany(u => u.CollageSubjects)
-            // .HasForeignKey(p => p.SubjectId);
-
-
-            // builder.Entity<CollageAdmins> (x => x.HasKey(p => new { p.CollageId , p.UserId}));
-
-            // builder.Entity<CollageAdmins> ()
-            // .HasOne(u => u.College)
-            // .WithMany(u => u.CollageAdmins)
-            // .HasForeignKey(p => p.CollageId);
-
-            // builder.Entity<CollageAdmins> ()
-            // .HasOne(u => u.User)
-            // .WithMany(u => u.CollageAdmins)
-            // .HasForeignKey(p => p.UserId);
+            builder.Entity<College>()
+            .HasMany(u =>u.Subjects)
+            .WithMany(c =>c.Colleges)
+            .UsingEntity(j =>j.ToTable("CollageSemesterSubject"));
 
 
 

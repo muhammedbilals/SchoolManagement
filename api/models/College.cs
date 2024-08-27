@@ -11,6 +11,8 @@ namespace api.models
         public string CollageCode {set; get;} = string.Empty;
         public string Name { get; set; } =string.Empty;
         public List<Subject> Subjects {get; set;} = new List<Subject>();
-        public ICollection<User> Users { get; set; } 
+        public List<Semester> Semesters {get; set;} = new List<Semester>();
+
+        public ICollection<User> Users { get; set; }
     }
 }
