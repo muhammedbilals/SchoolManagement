@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './index.css'
 
 
-import HomePage from './pages/homepage';
+import AdminHome from './pages/adminhome';
 import AuthPage from './pages/authpage';
 
 const App = () => {
@@ -11,7 +11,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<AuthPage />} />
-        <Route path="/homepage" element={<HomePage />} />
+        <Route path="/homepage" element={<AdminHome />} />
       </Routes>
     </Router>
   );
