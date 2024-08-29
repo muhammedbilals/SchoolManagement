@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -7,14 +9,11 @@ const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
-    // Example: Fetch some initial data if needed when the component mounts
     async function loadInitialData() {
-      // Fetch initial data if needed, for example, checking if the user is already authenticated
-      // const authData = await fetchAuthStatus();
-      // Handle the fetched data
+      // Fetch initial data if needed
     }
     loadInitialData();
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+  }, []);
 
   const handleAuth = async () => {
     setIsLoading(true);
@@ -42,35 +41,48 @@ const AuthPage = () => {
   };
 
   return (
-    <div>
-      <h2>{isLogin ? 'Login' : 'Sign Up'}</h2>
-      <div>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <button onClick={handleAuth} disabled={isLoading}>
-          {isLoading ? 'Loading...' : isLogin ? 'Login' : 'Sign Up'}
-        </button>
-      </div>
-      <div>
-        <button onClick={toggleAuthMode}>
-          {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
-        </button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-semibold mb-6 text-center">
+          {isLogin ? 'Login' : 'Sign Up'}
+        </h2>
+        <div className="mb-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-4">
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="mb-6">
+          <button
+            onClick={handleAuth}
+            disabled={isLoading}
+            className="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+          >
+            {isLoading ? 'Loading...' : isLogin ? 'Login' : 'Sign Up'}
+          </button>
+        </div>
+        <div className="text-center">
+          <button
+            onClick={toggleAuthMode}
+            className="text-blue-500 hover:underline"
+          >
+            {isLogin ? 'Switch to Sign Up' : 'Switch to Login'}
+          </button>
+        </div>
       </div>
     </div>
   );
