@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import userController, { loginUser } from "../controllers/userController"
 
 
 
@@ -18,14 +19,8 @@ const AuthPage = () => {
   const handleAuth = async () => {
     setIsLoading(true);
     try {
-      const endpoint = isLogin ? '/Auth/Login' : '/Auth/SignUp';
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      // const endpoint = isLogin ? '/Auth/Login' : '/Auth/SignUp';
+      const response = await loginUser()
 
       const data = await response.json();
       console.log(data); // Handle the response from the server
@@ -43,7 +38,7 @@ const AuthPage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-6 text-center">
+        <h2 className="text-2xl text-black font-semibold mb-6 text-center">
           {isLogin ? 'Login' : 'Sign Up'}
         </h2>
         <div className="mb-4">
@@ -53,7 +48,7 @@ const AuthPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 text-black border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="mb-4">
@@ -63,7 +58,7 @@ const AuthPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-3 text-black border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
         <div className="mb-6">
