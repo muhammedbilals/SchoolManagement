@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import CollageCard from '../components/card'; // Adjust the import path if necessary
+import React, { useState, useEffect } from 'react';
+import CollageCard from '../components/card';
+import { getColleges } from '../controllers/collegeController';
 
 const AdminHome = () => {
   const [selectedTab, setSelectedTab] = useState('Collage');
-  const userName = 'John Doe'; // Replace with actual user data
-  const userEmail = 'john.doe@example.com'; // Replace with actual user data
+  const [collages,setColleges] = useState([])
+  const userName = 'John Doe';
+  const userEmail = 'john.doe@example.com';
+
+
+  useEffect(() => {
+    async function loadInitialData() {
+      try {
+        const data = await getColleges();
+        setColleges(data);
+      } catch (error) {
+        console.error('Failed to load collages:', error);
+      }
+    }
+    loadInitialData();
+  }, []);
+
+
 
   const contentSection = () => {
     // Example data for collage cards
-    const collages = [
-      { id: 1, collageCode: 'AKM', name: 'akm hs' },
-      { id: 2, collageCode: 'MMUPS', name: 'mmups' },
-      { id: 3, collageCode: 'GHSS', name: 'palayamkunnu' },
-      { id: 4, collageCode: 'XYZ', name: 'new collage' },
-      { id: 5, collageCode: 'ABC', name: 'another collage' },
-      { id: 6, collageCode: 'DEF', name: 'third collage' },
-      // Add more collages here
-    ];
+
 
     const handleEdit = (id) => {
       console.log('Edit collage with id:', id);

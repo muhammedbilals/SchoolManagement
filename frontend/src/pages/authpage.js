@@ -20,11 +20,11 @@ const AuthPage = () => {
   const handleAuth = async () => {
     if(isLogin){
       setIsLoading(true);
-      setErrorMessage(''); // Reset error message before starting the request
+      setErrorMessage('');
       try {
         const response = await loginUser(email, password);
         console.log(email,password)
-        console.log(response); // Handle the response from the server
+        console.log(response);
 
         localStorage.setItem('authToken', response.tokens);
         localStorage.setItem('userEmail', response.email);

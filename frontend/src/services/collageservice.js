@@ -3,6 +3,7 @@ import api from '../api/api'
 const getColleges = async () => {
     try {
         const response = await api.get('/api/college')
+        console.log(response)
         return response.data
     } catch (error) {
         console.log('error in login api',error)
