@@ -1,9 +1,9 @@
 import userService from "../services/userservice"
 
-export const loginUser = async (email,password) =>{
-    return await userService.loginUser(email,password);
+export const getUsers = async () =>{
+    return await userService.getUsers();
 }
 
-export const signUpUser = async (email,password) =>{
-    return await userService.signUpUser(email,password);
+export const getCollagesByUser = async (userId,collageId) =>{
+    return await userService.getCollagesByUser(userId,collageId);
 }

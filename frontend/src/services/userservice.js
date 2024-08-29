@@ -1,45 +1,28 @@
 import api from '../api/api'
+import { transformUser } from '../models/user';
 
-const loginUser = async (email, password) => {
+const getUsers = async () => {
     try {
-        const response = await api.post('/api/Auth/login',
-            { 
-                email: email,
-                password: password
-            },  
-            { 
-            headers: {
-                'Content-Type' : 'application/json',
-                // 'Authorization': 'Bearer your_token_here',
-            },
-        })
+        const response = await api.get('/api/user/getusers')
+        console.log(response)
+
+        return response.data.map(userData => transformUser(userData));
+    } catch (error) {
+        console.log('error in login api',error)
+    }
+}
+const getCollagesByUser = async (userId) => {
+    try {
+        const response = await api.get(`/api/user/${userId}/college`)
         return response.data
     } catch (error) {
         console.log('error in login api',error)
     }
 }
 
-const signUpUser = async (email, password) => {
-    try {
-        const response = await api.post('/api/Auth/register',
-            {
-                email: email,
-                password: password
-            },
-            {
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Authorization': 'Bearer your_token_here',
-            },
-        })
-        return response.data
-    } catch (error) {
-        console.log('error in signup api',error)
-    }
-}
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    loginUser,
-    signUpUser,
+    getUsers,
+    getCollagesByUser
 }

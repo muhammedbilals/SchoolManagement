@@ -12,6 +12,7 @@ namespace api.mappers
         public static UserDto ToUserDto (this User user)
         {
             return new UserDto{
+                    Id = user.Id,
                  Email =user.Email,
                  Name =user.UserName
             };

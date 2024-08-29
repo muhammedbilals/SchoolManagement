@@ -1,16 +1,19 @@
 export class User{
     constructor({
+        id,
         email,
-        password
+        name
     }){
+        this.id =  id;
         this.email =email;
-        this.password = password;
+        this.password = name;
     }
 }
 
 export const transformUser = (data) =>{
     return new User({
+        id : data.id,
         email:data.email,
-        password: data.password
+        name: data.name
     })
 }
