@@ -39,12 +39,20 @@ const AuthPage = () => {
       } finally {
         setIsLoading(false);
       }
-    }else if(!isLogin){
+    }
+     if(!isLogin){
       setIsLoading(true);
       setErrorMessage(''); // Reset error message before starting the request
       try {
         const response = await signUpUser(email, password);
         console.log(response); // Handle the response from the server
+
+        localStorage.setItem('authToken', response.tokens);
+        localStorage.setItem('userEmail', response.email);
+            
+        console.log('signup successful:', response);
+
+        navigate('/homepage');
       } catch (error) {
         setErrorMessage('Failed to authenticate. Please try again.');
         console.error('Error:', error);
