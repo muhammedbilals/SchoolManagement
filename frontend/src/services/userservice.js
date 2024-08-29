@@ -2,7 +2,7 @@ import api from '../api/api'
 
 const loginUser = async (email, password) => {
     try {
-        const response = await api.post('api/Auth/login',
+        const response = await api.post('/api/Auth/login',
             { 
                 email: email,
                 password: password

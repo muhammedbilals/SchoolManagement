@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import userController, { loginUser } from "../controllers/userController"
-
-
+import { loginUser } from "../controllers/userController";
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     async function loadInitialData() {
@@ -18,13 +17,12 @@ const AuthPage = () => {
 
   const handleAuth = async () => {
     setIsLoading(true);
+    setErrorMessage(''); // Reset error message before starting the request
     try {
-      // const endpoint = isLogin ? '/Auth/Login' : '/Auth/SignUp';
-      const response = await loginUser()
-
-      const data = await response.json();
-      console.log(data); // Handle the response from the server
+      const response = await loginUser(email, password);
+      console.log(response); // Handle the response from the server
     } catch (error) {
+      setErrorMessage('Failed to authenticate. Please try again.');
       console.error('Error:', error);
     } finally {
       setIsLoading(false);
@@ -61,6 +59,13 @@ const AuthPage = () => {
             className="w-full p-3 text-black border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
+        
+        {errorMessage && (
+          <div className="mb-4 text-red-600">
+            {errorMessage}
+          </div>
+        )}
+
         <div className="mb-6">
           <button
             onClick={handleAuth}

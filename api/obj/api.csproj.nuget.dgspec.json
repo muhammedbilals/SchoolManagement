@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj": {}
+    "C:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj": {}
   },
   "projects": {
-    "c:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj": {
+    "C:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj",
+        "projectUniqueName": "C:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj",
         "projectName": "api",
-        "projectPath": "c:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj",
+        "projectPath": "C:\\Users\\muham\\dotnet\\school_manager\\api\\api.csproj",
         "packagesPath": "C:\\Users\\muham\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\muham\\dotnet\\school_manager\\api\\obj\\",
+        "outputPath": "C:\\Users\\muham\\dotnet\\school_manager\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\muham\\AppData\\Roaming\\NuGet\\NuGet.Config",
