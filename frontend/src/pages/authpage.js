@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { loginUser } from "../controllers/userController";
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { loginUser, signUpUser } from "../controllers/userController";
 
 const AuthPage = () => {
   const [email, setEmail] = useState('');
@@ -7,6 +8,7 @@ const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     async function loadInitialData() {
@@ -16,17 +18,41 @@ const AuthPage = () => {
   }, []);
 
   const handleAuth = async () => {
-    setIsLoading(true);
-    setErrorMessage(''); // Reset error message before starting the request
-    try {
-      const response = await loginUser(email, password);
-      console.log(response); // Handle the response from the server
-    } catch (error) {
-      setErrorMessage('Failed to authenticate. Please try again.');
-      console.error('Error:', error);
-    } finally {
-      setIsLoading(false);
+    if(isLogin){
+      setIsLoading(true);
+      setErrorMessage(''); // Reset error message before starting the request
+      try {
+        const response = await loginUser(email, password);
+        console.log(email,password)
+        console.log(response); // Handle the response from the server
+
+        localStorage.setItem('authToken', response.tokens);
+        localStorage.setItem('userEmail', response.email);
+            
+        console.log('Login successful:', response);
+
+        navigate('/homepage');
+
+      } catch (error) {
+        setErrorMessage('Failed to authenticate. Please try again.');
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }else if(!isLogin){
+      setIsLoading(true);
+      setErrorMessage(''); // Reset error message before starting the request
+      try {
+        const response = await signUpUser(email, password);
+        console.log(response); // Handle the response from the server
+      } catch (error) {
+        setErrorMessage('Failed to authenticate. Please try again.');
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
+  
   };
 
   const toggleAuthMode = () => {
