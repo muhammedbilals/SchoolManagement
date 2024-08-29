@@ -58,6 +58,19 @@ builder.Services.AddScoped<ICollegeRepository,CollegeRepository>();
 builder.Services.AddScoped<ISemesterRepository,SemesterRepository>();
 builder.Services.AddScoped<ISubjectRepository,SubjectRepository>();
 builder.Services.AddScoped<ITokenServices, TokenService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost3000", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -65,7 +78,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors("AllowLocalhost3000");
 
 app.MapControllers();
 

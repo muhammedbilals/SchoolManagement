@@ -30,15 +30,15 @@ namespace api.data
             .WithMany(c => c.Users)
             .UsingEntity(j => j.ToTable("UserColleges"));
 
-            builder.Entity<College>()
-            .HasMany(u =>u.Semesters)
-            .WithMany(c =>c.Colleges)
-            .UsingEntity(j =>j.ToTable("CollageSemesterSubject"));
+            // builder.Entity<College>()
+            // .HasMany(u =>u.Semesters)
+            // .WithMany(c =>c.Colleges)
+            // .UsingEntity(j =>j.ToTable("CollageSemesterSubject"));
 
-            builder.Entity<College>()
-            .HasMany(u =>u.Subjects)
-            .WithMany(c =>c.Colleges)
-            .UsingEntity(j =>j.ToTable("CollageSemesterSubject"));
+            // builder.Entity<College>()
+            // .HasMany(u =>u.Subjects)
+            // .WithMany(c =>c.Colleges)
+            // .UsingEntity(j =>j.ToTable("CollageSemesterSubject"));
 
 
 
