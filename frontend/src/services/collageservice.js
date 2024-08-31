@@ -12,7 +12,7 @@ const getColleges = async () => {
 
 const getCollege = async (id) => {
     try {
-        const response = await api.get(`/api/college/${id}`)
+        const response = await api.get(`/api/college/${id}`) 
         return response.data
     } catch (error) {
         console.log('error in login api',error)

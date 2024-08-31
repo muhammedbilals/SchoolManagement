@@ -45,10 +45,10 @@ namespace api.controllers
                             
                         });
                     }else{
-                        return BadRequest(roleResult.Errors);
+                        return StatusCode(500,roleResult.Errors);
                     }
                 }else {
-                    return BadRequest(registerdUser.Errors);
+                    return StatusCode(500,registerdUser.Errors);
                 }
             }
             catch (Exception e)
