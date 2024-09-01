@@ -1,6 +1,7 @@
 using api.dtos.college;
 using api.interfaces;
 using api.mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.controllers
@@ -30,6 +31,7 @@ namespace api.controllers
             return Ok(collage);
         }
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetColleges(){
 
             if(!ModelState.IsValid) return BadRequest(ModelState);

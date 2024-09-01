@@ -29,7 +29,7 @@ const updateCollege = async (collegeId,collegeCode,collegeName) => {
             { 
             headers: {
                 'Content-Type' : 'application/json',
-                // 'Authorization': 'Bearer your_token_here',
+                'Authorization': 'Bearer your_token_here',
             },
         }
         )
