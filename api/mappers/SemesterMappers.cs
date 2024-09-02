@@ -12,6 +12,7 @@ namespace api.mappers
         public static Semester ToSemester(SemesterDto semesterDto){
 
             return new Semester {
+                id =semesterDto.Id,
                 code = semesterDto.code,
                 description =semesterDto.description,
             };
@@ -19,6 +20,8 @@ namespace api.mappers
 
         public static SemesterDto ToSemesterDto(Semester semester){
             return new SemesterDto {
+              Id = semester.id,
+                
                 code =semester.code,
                 description =semester.description
             };

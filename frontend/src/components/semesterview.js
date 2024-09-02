@@ -4,13 +4,13 @@ import { getSemesters } from '../controllers/semesterController';
 
 
 const CollegeContent = () => {
-  const [semester,setColleges] = useState([])
+  const [semester,setSemester] = useState([])
 
   useEffect(() => {
     async function loadInitialData() {
       try {
         const data = await getSemesters();
-        setColleges(data);
+        setSemester(data);
       } catch (error) {
         console.error('Failed to load semester:', error);
       }

@@ -1,4 +1,4 @@
-import SemesterService from "../services/collageservice"
+import SemesterService from "../services/semesterservice"
 
 export const getSemesters = async () =>{
     return await SemesterService.getSemesters();
