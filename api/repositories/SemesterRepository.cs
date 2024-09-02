@@ -47,9 +47,9 @@ namespace api.repositories
             return await _context.semester.FirstOrDefaultAsync(s => s.id== id);
         }
 
-        public Task<Semester?> GetSemesters()
+        public async Task<List<Semester>?> GetSemesters()
         {
-            throw new NotImplementedException();
+            return await _context.semester.ToListAsync();
         }
 
         public async Task<Semester?> UpdateSemester(int id, SemesterDto semesterDto)

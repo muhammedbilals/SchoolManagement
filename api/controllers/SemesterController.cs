@@ -34,6 +34,19 @@ namespace api.controllers
 
          return Ok(SemesterMappers.ToSemesterDto(semester));
         }
+        [HttpGet()]
+        public async Task<IActionResult> GetSemesters(){
+
+        if(!ModelState.IsValid) return BadRequest(ModelState);
+
+         var semester =  await _semesterRepo.GetSemesters();
+
+         if(semester ==null){
+            return NotFound();
+         }
+
+         return Ok(semester.Select(s =>SemesterMappers.ToSemesterDto(s)));
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateSemeter([FromBody] SemesterDto semesterDto){
