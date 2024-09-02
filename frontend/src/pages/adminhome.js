@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import CollageContent from '../components/collageview';
 import UserContent from '../components/userview';
+import CollegeContent from '../components/semesterview';
 
 const AdminHome = () => {
   const [selectedTab, setSelectedTab] = useState('Collage');
@@ -11,6 +12,8 @@ const AdminHome = () => {
     switch (selectedTab) {
       case 'Collage':
         return <CollageContent />;
+        case 'Semester':
+        return <CollegeContent />;
       case 'Users':
         return <UserContent />;
       default:
