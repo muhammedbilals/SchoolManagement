@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace api.Migrations
 {
     /// <inheritdoc />
-    public partial class usercollagerelation : Migration
+    public partial class Databsemigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,6 +78,21 @@ namespace api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_semester", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "subject",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_subject", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,27 +202,6 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "subject",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CourseId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CollegeId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_subject", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_subject_College_CollegeId",
-                        column: x => x.CollegeId,
-                        principalTable: "College",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserColleges",
                 columns: table => new
                 {
@@ -231,14 +225,62 @@ namespace api.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CollegeSemester",
+                columns: table => new
+                {
+                    CollegesId = table.Column<int>(type: "int", nullable: false),
+                    Semestersid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollegeSemester", x => new { x.CollegesId, x.Semestersid });
+                    table.ForeignKey(
+                        name: "FK_CollegeSemester_College_CollegesId",
+                        column: x => x.CollegesId,
+                        principalTable: "College",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollegeSemester_semester_Semestersid",
+                        column: x => x.Semestersid,
+                        principalTable: "semester",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CollegeSubject",
+                columns: table => new
+                {
+                    CollegesId = table.Column<int>(type: "int", nullable: false),
+                    SubjectsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CollegeSubject", x => new { x.CollegesId, x.SubjectsId });
+                    table.ForeignKey(
+                        name: "FK_CollegeSubject_College_CollegesId",
+                        column: x => x.CollegesId,
+                        principalTable: "College",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CollegeSubject_subject_SubjectsId",
+                        column: x => x.SubjectsId,
+                        principalTable: "subject",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2e95baf2-6e14-4742-a56a-c3c67b951975", null, "Lecturer", "LECTURER" },
-                    { "534ad906-e132-44e2-87ce-2f9e9eea4353", null, "Admin", "ADMIN" },
-                    { "de7c729a-f034-408f-85b0-4dd40a08d53a", null, "CollegeAdmin", "COLLEGEADMIN" }
+                    { "2c27ffec-9425-435e-85af-2283b6bf5a2a", null, "Lecturer", "LECTURER" },
+                    { "383cecd5-7f01-4584-a9e1-700b273908bb", null, "Admin", "ADMIN" },
+                    { "f9bd22ca-261c-4c0e-8c0e-195c1eb228bf", null, "CollegeAdmin", "COLLEGEADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -281,9 +323,14 @@ namespace api.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_subject_CollegeId",
-                table: "subject",
-                column: "CollegeId");
+                name: "IX_CollegeSemester_Semestersid",
+                table: "CollegeSemester",
+                column: "Semestersid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CollegeSubject_SubjectsId",
+                table: "CollegeSubject",
+                column: "SubjectsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserColleges_UsersId",
@@ -310,16 +357,22 @@ namespace api.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "semester");
+                name: "CollegeSemester");
 
             migrationBuilder.DropTable(
-                name: "subject");
+                name: "CollegeSubject");
 
             migrationBuilder.DropTable(
                 name: "UserColleges");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "semester");
+
+            migrationBuilder.DropTable(
+                name: "subject");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
