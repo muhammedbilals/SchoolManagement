@@ -9,7 +9,7 @@ class Subject {
     transform() {
         return {
             id: this.id,
-            code: this.subjectCode, // Use subjectCode instead of collageCode
+            subjectCode: this.subjectCode, // Use subjectCode instead of collagesubjectCode
             courseId: this.courseId,
             title: this.title,
         };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import CollageContent from '../components/collageview';
 import UserContent from '../components/userview';
-import CollegeContent from '../components/semesterview';
+import SemesterContent from '../components/semesterview';
 import SubjectContent from '../components/subjectview';
 
 const AdminHome = () => {
@@ -14,7 +14,7 @@ const AdminHome = () => {
       case 'Collage':
         return <CollageContent />;
         case 'Semester':
-        return <CollegeContent />;
+        return <SemesterContent />;
         case 'Subject':
           return <SubjectContent />;
       case 'Users':

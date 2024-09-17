@@ -5,7 +5,7 @@ const getSubjects = async () => {
     try {
         const response = await api.get('/api/Subject')
         console.log(response)
-        return Subject.transformSubjects(response)
+        return Subject.transformSubjects(response.data)
     } catch (error) {
         console.log('error in login api',error)
     }

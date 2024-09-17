@@ -3,7 +3,7 @@ import SemesterCard from './semstercard';
 import { getSemesters } from '../controllers/semesterController';
 
 
-const CollegeContent = () => {
+const SemesterContent = () => {
   const [semester,setSemester] = useState([])
 
   useEffect(() => {
@@ -18,16 +18,16 @@ const CollegeContent = () => {
     loadInitialData();
   }, []);
 
-    // Example data for college cards
+    // Example data for Semester cards
 
 
     const handleEdit = (id) => {
-      console.log('Edit college with id:', id);
+      console.log('Edit Semester with id:', id);
       // Implement your edit logic here
     };
 
     const handleDelete = (id) => {
-      console.log('Delete college with id:', id);
+      console.log('Delete Semester with id:', id);
       // Implement your delete logic here
     };
 
@@ -49,4 +49,4 @@ const CollegeContent = () => {
   };
 
 
-export default CollegeContent;
+export default SemesterContent;
